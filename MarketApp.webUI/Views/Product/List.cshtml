@@ -1,4 +1,48 @@
-﻿@page
-@model MarketApp.webUI.Views.Product.ListModel
+﻿@model ProductViewModel
+
 @{
+    Layout = "_Layout";
 }
+
+@section MessageBox
+{
+    <div class="alert alert-success text-center m-0">
+        You have a message
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @*Kategoriler*@
+        @await Component.InvokeAsync("Categories")
+    </div>
+    <div class="col-md-9">
+        @*Ürünler*@
+
+        @if (Model.Products.Count == 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning">
+                        Urun yok
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="row">
+
+                @foreach (var product in Model.Products)
+                {
+
+                    <div class="col-md-3">
+                        @await Html.PartialAsync("_product", product)
+                    </div>
+
+                }
+            </div>
+        }
+    </div>
+</div>
