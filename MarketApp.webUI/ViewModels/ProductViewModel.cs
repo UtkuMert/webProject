@@ -8,7 +8,6 @@ namespace MarketApp.webUI.ViewModels
 {
     public class ProductViewModel
     {
-
         public List<Product> Products { get; set; }
     }
 }
