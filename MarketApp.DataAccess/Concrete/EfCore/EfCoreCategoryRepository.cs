@@ -8,11 +8,8 @@ using System.Text;
 
 namespace MarketApp.DataAccess.Concrete.EfCore
 {
-    public class EfCoreProductRepository : EfCoreGenericRepository<Product, ShopContext>, IProductRepository
+    public class EfCoreCategoryRepository<T, TContext> : EfCoreGenericRepository<Category, ShopContext>,ICategoryRepository
     {
-        public IEnumerable<Product> GetPopularProducts()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

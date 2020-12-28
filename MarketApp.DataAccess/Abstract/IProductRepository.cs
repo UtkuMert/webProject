@@ -7,17 +7,8 @@ using System.Text;
 
 namespace MarketApp.DataAccess.Abstract
 {
-    public interface IProductRepository
+    public interface IProductRepository:IRepository<Product>
     {
-        Product GetById(int id);
-
-        Product GetOne(Expression<Func<Product, bool>> filter);
-
-        IQueryable<Product> GetAll(Expression<Func<Product, bool>> filter);
-
-        void Create(Product entity);
-        void Update(Product entity);
-        void Delete(Product entity);
-
+        IEnumerable<Product> GetPopularProducts();
     }
 }

@@ -7,16 +7,8 @@ using System.Text;
 
 namespace MarketApp.DataAccess.Abstract
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
-        Category GetById(int id);
-
-        Category GetOne(Expression<Func<Category, bool>> filter);
-
-        IQueryable<Category> GetAll(Expression<Func<Category, bool>> filter);
-
-        void Create(Category entity);
-        void Update(Category entity);
-        void Delete(Category entity);
+       
     }
 }
