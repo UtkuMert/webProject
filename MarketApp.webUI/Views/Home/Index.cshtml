@@ -1,4 +1,22 @@
-﻿@page
-@model MarketApp.webUI.Views.Home.IndexModel
+﻿@model MarketApp.webUI.Models.ProductListModel
 @{
+    Layout = null;
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    @foreach (var item in Model.Products)
+    {
+        <p>@item.Name</p>
+    }
+</body>
+</html>
+

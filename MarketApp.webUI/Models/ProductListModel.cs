@@ -1,13 +1,12 @@
 ﻿using MarketApp.Entity;
-using MarketApp.webUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MarketApp.webUI.ViewModels
+namespace MarketApp.webUI.Models
 {
-    public class ProductViewModel
+    public class ProductListModel
     {
         public List<Product> Products { get; set; }
     }

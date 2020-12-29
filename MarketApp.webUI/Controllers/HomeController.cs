@@ -1,4 +1,5 @@
-﻿using MarketApp.webUI.Models;
+﻿using MarketApp.Business.Abstract;
+using MarketApp.webUI.Models;
 using MarketApp.webUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,21 +11,17 @@ namespace MarketApp.webUI.Controllers
 {
     public class HomeController:Controller
     {
+        private IProductService _productService;
+        public HomeController(IProductService productService)
+        {
+            _productService = productService;
+        }
         public IActionResult Index()
         {
-            var products = new List<Product>()
-            {
-                new Product {Name="Elma",Price=3,Description="tatlı elma",IsApproved=false},
-                new Product {Name="Yesil Elma",Price=3,Description="ekşi elma",IsApproved=true},
-                new Product {Name="Limon",Price=3,Description="tatlı limon",IsApproved=true},
-                new Product {Name="Sarı Leon",Price=3,Description="eksi elma",}
-            };
-
-            var productViewModel = new ProductViewModel()
-            {
-                Products=products
-            };
-            return View();
+                
+            return View(new ProductListModel() { 
+                Products = _productService.GetAll()
+            });
         }
         public IActionResult About()
         {

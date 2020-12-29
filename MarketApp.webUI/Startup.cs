@@ -1,3 +1,7 @@
+using MarketApp.Business.Abstract;
+using MarketApp.Business.Concrete;
+using MarketApp.DataAccess.Abstract;
+using MarketApp.DataAccess.Concrete.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,20 +16,21 @@ namespace MarketApp.webUI
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+     
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IProductRepository, EfCoreProductRepository>();
+            services.AddScoped<IProductService, ProductManager>();
             services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedDatabase.Seed();
             }
 
             app.UseRouting();
@@ -34,7 +39,7 @@ namespace MarketApp.webUI
             {
                 endpoints.MapControllerRoute(
                    name: "default",
-                   pattern: "{controller=Product}/{action=list}/{id?}"
+                   pattern: "{controller=Home}/{action=index}/{id?}"
                     );
             });
         }
