@@ -1,0 +1,27 @@
+﻿@model Product
+
+
+
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img src="@Model.ImgUrl" alt="@Model.Name" />
+        <div class="card-body">
+            <h4 class="card-title">
+                <a href="#">@Model.Name</a>
+            </h4>
+            <small class="text-muted">
+                @*fontawesome dan icon ekle*@
+                <i class=""></i> @Model.Price
+            </small>
+            <div class="card-footer">
+                <a asp-controller="User" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary" btn-sm>Details</a>
+                @*butona tıklandığında ürün id'sini alır ve User'ın Details action'ını çalıştırır.*@
+                
+                <a href="#" class="btn btn-outline-primary" btn-sm ml-3>Add To Cart</a>
+
+            </div>
+        </div>
+    </div>
+</div> 
+

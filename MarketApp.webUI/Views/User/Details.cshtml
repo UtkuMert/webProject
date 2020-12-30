@@ -1,0 +1,13 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+@*Tasarım daha sonra yapılacak*@
+
+<img src="~/images/@Model.ImgUrl" alt="@Model.Name" class="img-fluid" />
+
+
+@Model.Name
+@Model.Price Türk Lirası
+<button type="submit" class="btn btn-primary btn-danger" >Add To Chart</button>
