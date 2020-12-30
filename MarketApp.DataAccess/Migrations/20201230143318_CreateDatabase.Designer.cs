@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApp.DataAccess.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20201229183718_CreateDatabase")]
+    [Migration("20201230143318_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
