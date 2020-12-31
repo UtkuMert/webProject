@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MarketApp.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCategoryRepository<T, TContext> : EfCoreGenericRepository<Category, ShopContext>,ICategoryRepository
+    public class EfCoreCategoryRepository : EfCoreGenericRepository<Category, ShopContext>,ICategoryRepository
     {
         
     }

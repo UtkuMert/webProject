@@ -21,6 +21,7 @@ namespace MarketApp.DataAccess.Concrete.EfCore
                 if (context.Products.Count() == 0)
                 {
                     context.Products.AddRange(Products);
+                    context.AddRange(ProductCategory); // Liste eklenir.
                 }
                 context.SaveChanges();
             }
@@ -30,11 +31,20 @@ namespace MarketApp.DataAccess.Concrete.EfCore
             new Category(){Name="Sebze"},
         };
         private static Product[] Products = {
-            new Product(){Name="Elma", Price=10,ImgUrl="1.jpg"},
-            new Product(){Name="Armut", Price=20,ImgUrl="2.jpg"},
-            new Product(){Name="Ayva", Price=30,ImgUrl="3.jpg"},
-            new Product(){Name="Soğan", Price=40,ImgUrl="4.jpg"},
-            new Product(){Name="Limon", Price=50,ImgUrl="5.jpg"}
+            new Product(){Name="Elma", Price=10,ImgUrl="1.jpg", Description="Açıklama"},
+            new Product(){Name="Armut", Price=20,ImgUrl="2.jpg", Description="Açıklama"},
+            new Product(){Name="Ayva", Price=30,ImgUrl="3.jpg", Description="Açıklama"},
+            new Product(){Name="Soğan", Price=40,ImgUrl="4.jpg", Description="Açıklama"},
+            new Product(){Name="Limon", Price=50,ImgUrl="5.jpg", Description="Açıklama"}
+        };
+        private static ProductCategory[] ProductCategory =
+        {
+            new ProductCategory() {Product = Products[0], Category=Categories[0]},
+            new ProductCategory() {Product = Products[1], Category=Categories[0]},
+            new ProductCategory() {Product = Products[2], Category=Categories[0]},
+            new ProductCategory() {Product = Products[3], Category=Categories[1]},
+            new ProductCategory() {Product = Products[4], Category=Categories[0]},
+            
         };
     }
 }

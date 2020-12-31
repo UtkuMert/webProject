@@ -40,6 +40,9 @@ namespace MarketApp.DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 

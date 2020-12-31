@@ -1,13 +1,19 @@
-﻿@model Product
+﻿@*@model Product  artık product yerine ProductListModel ile işlem yapılacak.*@
+@model ProductDetailsModel
 @{
     ViewData["Title"] = "Details";
 }
 
 @*Tasarım daha sonra yapılacak*@
 
-<img src="~/images/@Model.ImgUrl" alt="@Model.Name" class="img-fluid" />
+<img src="~/images/@Model.Product.ImgUrl" alt="@Model.Product.Name" class="img-fluid" />
 
 
-@Model.Name
-@Model.Price Türk Lirası
+@Model.Product.Name
+@Model.Product.Price Türk Lirası
+@Model.Product.Description
+@foreach (var category in Model.Categories)
+{
+    <a href="#" class="btn btn-outline-danger">@category.Name</a>
+}
 <button type="submit" class="btn btn-primary btn-danger" >Add To Chart</button>

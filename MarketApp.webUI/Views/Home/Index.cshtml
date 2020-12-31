@@ -1,4 +1,13 @@
-﻿@model MarketApp.webUI.Models.ProductListModel
+﻿@model ProductListModel
+
+
+@*Tasarım Daha Sonra Yapılacak*@
+    <div class="row">
+        <div class="col-md-3">
+            @await Component.InvokeAsync("CategoryList")
+        </div>
+    </div>
+
 
     @foreach (var product in Model.Products)
     {

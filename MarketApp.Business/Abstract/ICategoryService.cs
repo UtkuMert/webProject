@@ -5,9 +5,10 @@ using System.Text;
 
 namespace MarketApp.Business.Abstract
 {
-    interface ICategoryService
+    public interface ICategoryService
     {
         List<Category> GetAll();
+        Category GetById(int id);
         void Create(Category entity);
         void Update(Category entity);
         void Delete(Category entity);

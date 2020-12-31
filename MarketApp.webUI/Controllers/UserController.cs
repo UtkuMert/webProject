@@ -22,18 +22,30 @@ namespace MarketApp.webUI.Controllers
             {
                 return NotFound();
             }
-            Product product = _productService.GetById((int)id);
+            Product product = _productService.GetProductDetails((int)id);
             if (product == null)    // alınan id değerine karşılık bir ürün bulunamamışsa hata döndürür.
             {
                 return NotFound();
             }
-            return View(product); // id değeri bulunan ürün gönderilir.
+            return View(new ProductDetailsModel()   // id değeri bulunan ürün categori bilgisiyle gönderilir.
+                {
+                Product = product,
+                Categories = product.ProductCategories.Select(i=>i.Category).ToList()
+            }); 
         }
-        public IActionResult List()     // Tüm kayıtlar listelenir.
-        {
+        public IActionResult List(string category, int page=1)     // Tüm kayıtlar listelenir.
+        {                                                          //sayfa numarası varsayılan olarak 1 verildi.
+            const int pageSize = 5; // bir sayfada bulunacak ürün adedi.
             return View(new ProductListModel()
             {
-                Products = _productService.GetAll()  
+                PageInfo = new PageInfo()
+                {
+                    TotalProducts = _productService.GetCountByCategory(category),
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    CurrentCategory=category
+                },
+                Products = _productService.GetProductsByCategory(category, page, pageSize)  
             }) ;
         }
     }

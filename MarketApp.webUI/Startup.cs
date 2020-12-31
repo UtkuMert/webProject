@@ -19,9 +19,14 @@ namespace MarketApp.webUI
      
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, EfCoreProductRepository>();
-            services.AddScoped<IProductService, ProductManager>();
             services.AddControllersWithViews();
+            
+            services.AddScoped<IProductRepository, EfCoreProductRepository>(); // IProductRepository çaðrýldýðýnda EfCoreProductRepository gönderilir.
+            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>(); // ICategoryRepository çaðrýldýðýnda EfCoreCategoryRepository gönderilir.
+
+            services.AddScoped<IProductService, ProductManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +42,11 @@ namespace MarketApp.webUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "products",      // Url'ye products yazýlmasý durumunda kategori bilgisi gerekmeksizin ürünler listelenir. 
+                    pattern: "products/{category?}",        //kategori bilgisi var ise eþleþen ürünler listelenir.
+                    defaults: new { controller = "User", action = "List" });
+
                 endpoints.MapControllerRoute(
                    name: "default",
                    pattern: "{controller=Home}/{action=index}/{id?}"

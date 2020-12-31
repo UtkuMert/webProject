@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApp.DataAccess.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20201230143318_CreateDatabase")]
+    [Migration("20201231110916_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,9 @@ namespace MarketApp.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");

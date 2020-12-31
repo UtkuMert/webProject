@@ -36,6 +36,21 @@ namespace MarketApp.Business.Concrete
             return _productRepository.GetById(id);
         }
 
+        public int GetCountByCategory(string category)
+        {
+            return _productRepository.GetCountByCategory(category);
+        }
+
+        public Product GetProductDetails(int id)
+        {
+            return _productRepository.GetProductDetails(id);
+        }
+
+        public List<Product> GetProductsByCategory(string category, int page, int pageSize)
+        {
+            return _productRepository.GetProductsByCategory(category, page, pageSize);
+        }
+
         public void Update(Product entity)
         {
             _productRepository.Update(entity);

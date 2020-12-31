@@ -1,8 +1,16 @@
 ﻿@model ProductListModel
 
-    <div class="row">
-        @foreach(var product in Model.Products)
-        {
-            <partial name="_product" for="@product" />
-        }
+@*Tasarım Daha Sonra Yapılacak*@
+<div class="row">
+    <div class="col-md-3">
+        @await Component.InvokeAsync("CategoryList")
     </div>
+</div>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <partial name="_product" for="@product" />
+    }
+</div>
+<div page-model="@Model.PageInfo"></div>

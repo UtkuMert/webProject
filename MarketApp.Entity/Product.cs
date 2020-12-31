@@ -10,6 +10,7 @@ namespace MarketApp.Entity
         public string Name { get; set; }
         public double Price { get; set; }
         public string ImgUrl { get; set; }
+        public string Description { get; set; }
 
         public List<ProductCategory> ProductCategories { get; set; } //Cok-Cok bagintisi
 
