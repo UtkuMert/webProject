@@ -1,0 +1,48 @@
+﻿@model ProductListModel
+@{
+    ViewData["Title"] = "ProductList";
+
+}
+
+<h1>Admin Products</h1>
+<hr />
+@if (Model.Products.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Id</td>             @*tasarım daha sonra*@
+                <td>Image</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.ImgUrl</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm mr-2" href="/admin/products/@item.Id">Edit</a>
+                        <form action="/admin/deleteproduct" method="post" style="display:inline">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <button class="btn btn-danger btn-sm mr-2" type="submit">Delete</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>No Products</h4>
+    </div>
+}

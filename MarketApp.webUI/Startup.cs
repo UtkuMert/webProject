@@ -42,6 +42,17 @@ namespace MarketApp.webUI
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute(
+                name: "adminProducts",                 // id parametresi ile birlikte gönderirse edit iþlemi yapmak istediði anlaþýlýr.
+                pattern: "admin/{products}/{id?}",    
+                defaults: new { controller = "Admin", action = "EditProduct" });
+
+                endpoints.MapControllerRoute(
+                  name: "adminProducts",
+                  pattern: "admin/{products}",
+                  defaults: new { controller = "Admin", action = "ProductList" });
+
                 endpoints.MapControllerRoute(
                     name: "products",      // Url'ye products yazýlmasý durumunda kategori bilgisi gerekmeksizin ürünler listelenir. 
                     pattern: "products/{category?}",        //kategori bilgisi var ise eþleþen ürünler listelenir.
