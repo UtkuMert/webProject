@@ -35,7 +35,7 @@ namespace MarketApp.DataAccess.Concrete.EfCore
             new Product(){Name="Armut", Price=20,ImgUrl="2.jpg", Description="Açıklama"},
             new Product(){Name="Ayva", Price=30,ImgUrl="3.jpg", Description="Açıklama"},
             new Product(){Name="Soğan", Price=40,ImgUrl="4.jpg", Description="Açıklama"},
-            new Product(){Name="Limon", Price=50,ImgUrl="5.jpg", Description="Açıklama"}
+            new Product(){Name="Limon", Price=50,ImgUrl="limon.jpg", Description="Açıklama"}
         };
         private static ProductCategory[] ProductCategory =
         {

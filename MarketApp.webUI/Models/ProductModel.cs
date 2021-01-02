@@ -13,7 +13,7 @@ namespace MarketApp.webUI.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20,MinimumLength =5, ErrorMessage ="En az 5 en fazla 20 karakter girebilirsiniz.")]
+        [StringLength(20,MinimumLength =3, ErrorMessage ="En az 3 en fazla 20 karakter girebilirsiniz.")]
         public string Name { get; set; }
         [Required(ErrorMessage ="Bir Fiyat belirtiniz")]
         [Range(0,10000)]  // Price negatif olamaz.

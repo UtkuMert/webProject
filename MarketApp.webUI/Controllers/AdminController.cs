@@ -1,9 +1,11 @@
 ﻿using MarketApp.Business.Abstract;
 using MarketApp.Entity;
 using MarketApp.webUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,23 +80,42 @@ namespace MarketApp.webUI.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model, int[] categoryIds) // seçili olan kategori dizi şeklinde alınır.
-        {
-            var entity = _productService.GetById(model.Id);
-            if (entity == null)
+        public async Task<IActionResult> EditProduct(ProductModel model, int[] categoryIds, IFormFile file) // seçili olan kategori dizi şeklinde alınır.
+        {                                                                                       // "file" = inputtan gelen control name
+            if(ModelState.IsValid)
+            {
+                var entity = _productService.GetById(model.Id);
+                if (entity == null)
             {
                 return NotFound();
             }
             entity.Name = model.Name;
             entity.Price = model.Price;
             entity.Description = model.Description;
-            entity.ImgUrl = model.ImgUrl;
             
-            _productService.Update(entity, categoryIds); // güncelleme db'de işlemi yapılır
+            if (file != null)
+            {
+                entity.ImgUrl = file.FileName;
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", file.FileName); //Root dizinindeki image klasörünün yolu gösterildi, kullanılacak isime göre arama yapıp ekler
+
+                    using (var stream = new FileStream(path, FileMode.Create)) //pathe resmin gönderilmesi
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+            }
+
+                _productService.Update(entity, categoryIds); // güncelleme db'de işlemi yapılır
 
             return RedirectToAction("ProductList");
-            // url'ye değil de Rout'a yönlendirme işlemi yapıldı. güncellemeden sonra kullanıcı index'e gönderilir
-            // ProductList'e karşılık gelen Url, Rout içerisinden alınacak.
+                // url'ye değil de Rout'a yönlendirme işlemi yapıldı. güncellemeden sonra kullanıcı index'e gönderilir
+                // ProductList'e karşılık gelen Url, Rout içerisinden alınacak.
+            }
+            else
+            {
+                ViewBag.Categories = _categoryService.GetAll(); // DB'deki tüm kategorileri getirir.
+                return View(model);
+            }
         }
         [HttpPost]
         public IActionResult DeleteProduct(int productId)

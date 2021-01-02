@@ -10,7 +10,7 @@ namespace MarketApp.DataAccess.Concrete.EfCore
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server =.;Database=MarketStore; trusted_connection=true;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MarketDb;integrated security=true;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
