@@ -28,13 +28,13 @@ namespace MarketApp.DataAccess.Concrete.EfCore
         }
         private static Category[] Categories = {
             new Category(){Name="Meyve"},
-            new Category(){Name="Sebze"},
+            new Category(){Name="Sebze"}
         };
         private static Product[] Products = {
             new Product(){Name="Elma", Price=10,ImgUrl="elma.jpg", Description="Açıklama"},
-            new Product(){Name="Armut", Price=20,ImgUrl="2.jpg", Description="Açıklama"},
-            new Product(){Name="Ayva", Price=30,ImgUrl="3.jpg", Description="Açıklama"},
-            new Product(){Name="Soğan", Price=40,ImgUrl="4.jpg", Description="Açıklama"},
+            new Product(){Name="Armut", Price=20,ImgUrl="armut.jpg", Description="Açıklama"},
+            new Product(){Name="Ayva", Price=30,ImgUrl="ayva.jpg", Description="Açıklama"},
+            new Product(){Name="Soğan", Price=40,ImgUrl="sogan.jpg", Description="Açıklama"},
             new Product(){Name="Limon", Price=50,ImgUrl="limon.jpg", Description="Açıklama"}
         };
         private static ProductCategory[] ProductCategory =

@@ -1,8 +1,5 @@
 ﻿@model Product
 
-
-
-
 <div class="col-md-4">
     <div class="card mb-3">
         <img src="~/images/@Model.ImgUrl" alt="@Model.Name" class="img-fluid" />
@@ -11,8 +8,7 @@
                 <a href="#">@Model.Name</a>
             </h4>
             <small class="text-muted">
-                @*fontawesome dan icon ekle*@
-                <i class=""></i> @Model.Price
+                @Model.Price <i class="fas fa-lira-sign"></i>
             </small>
             <div class="card-footer">
                 <a asp-controller="User" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary" btn-sm>Details</a>

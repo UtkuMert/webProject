@@ -1,10 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-   
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MarketApp.webUI</title>
+    <script src="https://kit.fontawesome.com/5264fedd63.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -14,14 +15,10 @@
 
 
     @await Html.PartialAsync("_navbar")
-    <header>
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4">Market App</h1>
-                <p class="lead">Lorem ipsumdolot sit ıasjgofjg sdajgojga</p>
-            </div>
-        </div>
-    </header>
+    <div class="row">
+        @await Component.InvokeAsync("CategoryList")
+    </div>
+
     <main>
         <div class="container">
             @RenderBody()
@@ -29,7 +26,7 @@
     </main>
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 
+            &copy;
             - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

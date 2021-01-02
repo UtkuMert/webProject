@@ -1,33 +1,34 @@
-﻿<div class="navbar bg-primary navbar-dark navbar-expand-sm">
+﻿<div class="navbar bg-dark navbar-dark navbar-expand-sm">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MarketApp</a>
     <div class="container">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="List">Products</a>
+                <a class="nav-link" asp-area="" asp-controller="User" asp-action="List">Products</a>
             </li>
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cart</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Orders</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Orders</a>
                 </li>
                 if (User.IsInRole("admin"))
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateProduct">Add Product</a>
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CreateProduct">Add Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ProductList">Admin Products</a>
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="ProductList">Admin Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateCategory">Add Category</a>
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CreateCategory">Add Category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CategoryList">Admin Categories</a>
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CategoryList">Admin Categories</a>
                     </li>
                 }
             }
@@ -36,22 +37,21 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Manage" class="nav-link">@User.Identity.Name</a>
+                    <a class="nav-link" asp-controller="Account" asp-action="Manage">@User.Identity.Name</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a>
+                    <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
                 </li>
             }
             else
             {
                 <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                    <a class="nav-link" asp-controller="Account" asp-action="Login" >Login</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
+                    <a class="nav-link" asp-controller="Account" asp-action="Register" >Register</a>
                 </li>
             }
-
         </ul>
     </div>
 </div>

@@ -4,16 +4,31 @@
     ViewData["Title"] = "Details";
 }
 
-@*Tasarım daha sonra yapılacak*@
-
-<img src="~/images/@Model.Product.ImgUrl" alt="@Model.Product.Name" class="img-fluid" />
-
-
-@Model.Product.Name
-@Model.Product.Price Türk Lirası
-@Model.Product.Description
-@foreach (var category in Model.Categories)
-{
-    <a href="#" class="btn btn-outline-danger">@category.Name</a>
-}
-<button type="submit" class="btn btn-primary btn-danger" >Add To Chart</button>
+<div class="row mt-3">
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <img src="~/images/@Model.Product.ImgUrl" alt="@Model.Product.Name" class="img-fluid" />
+        </div>
+    </div>
+        <div class="col-md-9">
+            <h1 class="mb-3">
+                @Model.Product.Name
+            </h1>
+            <hr />
+            @foreach (var category in Model.Categories)
+            {
+                <a href="#" class="btn btn-link">@category.Name</a>
+            }
+            <div class="mb-3">
+                <h4>@Model.Product.Price Türk Lirası</h4>
+                <button type="submit" class="btn btn-primary btn-danger">Add To Chart</button>
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="p-5">
+            @Html.Raw(Model.Product.Description) @*html kodları okuyor*@
+        </p>
+    </div>
+</div>
