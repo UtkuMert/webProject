@@ -1,10 +1,14 @@
-using MarketApp.Business.Abstract;
+ï»¿using MarketApp.Business.Abstract;
 using MarketApp.Business.Concrete;
 using MarketApp.DataAccess.Abstract;
 using MarketApp.DataAccess.Concrete.EfCore;
+using MarketApp.webUI.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -16,35 +20,85 @@ namespace MarketApp.webUI
 {
     public class Startup
     {
-     
+        private IConfiguration Configuration { get; set; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<UserIdentityDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddIdentity<UserIdentity, IdentityRole>()
+                .AddEntityFrameworkStores<UserIdentityDbContext>()
+                .AddDefaultTokenProviders(); //Sifre reset veya mail deÄŸismede benzersiz bir token Ã¼retir
+            services.Configure<IdentityOptions>(options =>
+            {
+                //sifre
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+
+
+                options.Lockout.MaxFailedAccessAttempts = 5; //yanlÄ±s girme hakÄ±
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                options.Lockout.AllowedForNewUsers = true; //yeni kullanÄ±cÄ±da yanlÄ±s girme hakki
+
+                options.User.RequireUniqueEmail = true; //aynÄ± mail ile olusmaz
+                options.SignIn.RequireConfirmedEmail = false; //mail onayi
+                options.SignIn.RequireConfirmedPhoneNumber = false;//telefon onayi
+            });
+
+            services.ConfigureApplicationCookie(options => 
+            {
+                options.LoginPath = "/account/login";
+                options.LogoutPath = "/account/logout";
+                options.AccessDeniedPath = "/account/accessdenied"; //giris hakki olmayan yerden buraya yonlendirir
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //cookie saklanmasi
+                options.SlidingExpiration = true;
+                options.Cookie = new CookieBuilder
+                {
+                    HttpOnly = true,
+                    Name = ".MarketApp.Security.Cookie", //disardan script bu bilgilere ulasmasÄ± engellenir
+                    SameSite = SameSiteMode.Strict
+                };
+            });
+
             services.AddControllersWithViews();
             
-            services.AddScoped<IProductRepository, EfCoreProductRepository>(); // IProductRepository çaðrýldýðýnda EfCoreProductRepository gönderilir.
-            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>(); // ICategoryRepository çaðrýldýðýnda EfCoreCategoryRepository gönderilir.
+            services.AddScoped<IProductRepository, EfCoreProductRepository>(); // IProductRepository cagrÄ±ldÄ±gÄ±nda EfCoreProductRepository gÃ¶nderilir.
+            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>(); // ICategoryRepository cagrÄ±ldÄ±gÄ±nda EfCoreCategoryRepository gÃ¶nderilir.
 
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager)
         {
             app.UseStaticFiles();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 SeedDatabase.Seed();
+                SeedIdentity.Seed(userManager,roleManager,Configuration).Wait();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
 
                 endpoints.MapControllerRoute(
-                name: "adminProducts",                 // id parametresi ile birlikte gönderirse edit iþlemi yapmak istediði anlaþýlýr.
+                name: "adminProducts",                 // id parametresi ile birlikte gÃ¶nderirse edit iÃ¾lemi yapmak istediÃ°i anlaÃ¾Ã½lÃ½r.
                 pattern: "admin/{products}/{id?}",    
                 defaults: new { controller = "Admin", action = "EditProduct" });
 
@@ -54,8 +108,8 @@ namespace MarketApp.webUI
                   defaults: new { controller = "Admin", action = "ProductList" });
 
                 endpoints.MapControllerRoute(
-                    name: "products",      // Url'ye products yazýlmasý durumunda kategori bilgisi gerekmeksizin ürünler listelenir. 
-                    pattern: "products/{category?}",        //kategori bilgisi var ise eþleþen ürünler listelenir.
+                    name: "products",      // Url'ye products yazilmasi durumunda kategori bilgisi gerekmeksizin urunler listelenir. 
+                    pattern: "products/{category?}",        //kategori bilgisi var ise eslesen urunler listelenir.
                     defaults: new { controller = "User", action = "List" });
 
                 endpoints.MapControllerRoute(

@@ -1,6 +1,7 @@
 ﻿using MarketApp.Business.Abstract;
 using MarketApp.Entity;
 using MarketApp.webUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace MarketApp.webUI.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class AdminController : Controller
     {
         private IProductService _productService;
