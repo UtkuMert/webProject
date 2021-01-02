@@ -61,5 +61,47 @@ namespace MarketApp.DataAccess.Concrete.EfCore
                 return products.Count();
             }
         }
+
+        public Product GetByIdWithCategories(int id)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Products
+                    .Where(i => i.Id == id)
+                    .Include(i => i.ProductCategories)
+                    .ThenInclude(i => i.Category)
+                    .FirstOrDefault();
+            }
+        }
+
+        public void Update(Product entity, int[] categoryIds)
+        {
+            using (var context = new ShopContext())
+            {
+                var product = context.Products      // güncellenmek istenen ürün
+                                              .Include(i => i.ProductCategories)
+                                              .FirstOrDefault(i => i.Id == entity.Id);
+                if (product != null)
+                {
+                    product.Name = entity.Name;
+                    product.Description = entity.Description;
+                    product.ImgUrl = entity.ImgUrl;
+                    product.Price = entity.Price;
+
+                    //seçilen kategoriler ile ürünlerin ilişkilendirme işlemi, ProductCategory bunu sağlıyordu zaten.
+                    product.ProductCategories = categoryIds.Select(category_id => new ProductCategory()
+                    {
+                        CategoryId = category_id,
+                        ProductId = entity.Id
+                    }).ToList();
+                    context.SaveChanges();
+                    
+                }
+            
+            
+            
+            }
+            
+        }
     }
 }

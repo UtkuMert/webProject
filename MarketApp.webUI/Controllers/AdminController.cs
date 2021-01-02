@@ -30,21 +30,28 @@ namespace MarketApp.webUI.Controllers
         [HttpGet]
         public IActionResult CreateProduct()
         {
-            return View();
+            return View(new ProductModel());
         }
         [HttpPost]
         public IActionResult CreateProduct(ProductModel model)
         {
-            var entity = new Product()
-            {
-                Name = model.Name,
-                Price = model.Price,
-                Description = model.Description,
-                ImgUrl = model.ImgUrl
-            };
-            _productService.Create(entity); // oluşturma işlemi db'de yapılır.
 
-            return RedirectToAction("ProductList"); //Ekleme işleminden sonra ProductList'e yönlendirilerek direkt ürün listesiyle karşılaşılır.
+            if (ModelState.IsValid) // ProductModel'den oluşturulan kopyada girilen veriler kurallara uygun biçimde geldi ise true döner.
+            {
+                var entity = new Product()
+                {
+                    Name = model.Name,
+                    Price = model.Price,
+                    Description = model.Description,
+                    ImgUrl = model.ImgUrl
+                };
+                _productService.Create(entity); // oluşturma işlemi db'de yapılır.
+
+                return RedirectToAction("ProductList"); //Ekleme işleminden sonra ProductList'e yönlendirilerek direkt ürün listesiyle karşılaşılır.
+
+            }
+            return View(model); // Doğrulama işlemi hatalı olursa tekrar aynı sayfaya döndürülür.
+
         }
         public IActionResult EditProduct(int? id)
         {
@@ -52,7 +59,8 @@ namespace MarketApp.webUI.Controllers
             {
                 return NotFound();
             }
-            var entity = _productService.GetById((int)id); // id gelirse nullable tipinden int'e çevrilmeli 
+            // 
+            var entity = _productService.GetByIdWithCategories((int)id); // id gelirse nullable tipinden int'e çevrilmeli 
             if (entity == null)
             {
                 return NotFound(); // olmayan ürüne işlem yapılamayacağından dolayı.
@@ -63,12 +71,14 @@ namespace MarketApp.webUI.Controllers
                 Name = entity.Name,
                 Price = entity.Price,
                 Description = entity.Description,
-                ImgUrl = entity.ImgUrl
+                ImgUrl = entity.ImgUrl,
+                SelectedCategories = entity.ProductCategories.Select(i => i.Category).ToList() //seçili olan kategori bilgileri
             };
+            ViewBag.Categories = _categoryService.GetAll(); // DB'deki tüm kategorileri getirir.
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model)
+        public IActionResult EditProduct(ProductModel model, int[] categoryIds) // seçili olan kategori dizi şeklinde alınır.
         {
             var entity = _productService.GetById(model.Id);
             if (entity == null)
@@ -80,7 +90,7 @@ namespace MarketApp.webUI.Controllers
             entity.Description = model.Description;
             entity.ImgUrl = model.ImgUrl;
             
-            _productService.Update(entity); // güncelleme db'de işlemi yapılır
+            _productService.Update(entity, categoryIds); // güncelleme db'de işlemi yapılır
 
             return RedirectToAction("ProductList");
             // url'ye değil de Rout'a yönlendirme işlemi yapıldı. güncellemeden sonra kullanıcı index'e gönderilir
