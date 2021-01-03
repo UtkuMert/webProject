@@ -1,56 +1,58 @@
 ﻿@model SepetModel
-@{ 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+@{
     ViewData["Title"] = "Index";
 }
 <div class="row mt-5">
     <div class="col-md-8">
         <div class="text-left">
-            <h4>Cart Items</h4>
+            <h4>@_localizer["Cart Items"]</h4>
         </div>
-     
+
         @if (Model.SepetItems.Count() > 0)
         {
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.SepetItems)
-                {
+            <table class="table table-hover text-center bg-light ">
+                <thead>
                     <tr>
-                        <td>
-                            <img src="~/images/@item.ImageUrl" width="80" />
-                        </td>
-                        <td>@item.Name</td>
-                        <td>@item.Price.ToString("c")</td>
-                        <td>@item.Quantity</td>
-                        <td>@((item.Quantity * item.Price).ToString("c"))</td>
-                        <td>
-                            <form asp-controller="Sepet" asp-action="DeleteFromCart" method="post">
-                                <input type="hidden" name="productId" value="@item.ProductId" />
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-times fa-fw"> </i>
-                                </button>
-                            </form>
-                           
-                        </td>
+                        <th></th>
+                        <th>@_localizer["Product"]</th>
+                        <th>@_localizer["Price"]</th>
+                        <th>@_localizer["Quantity"]</th>
+                        <th>@_localizer["Total"]</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SepetItems)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/images/@item.ImageUrl" width="80" />
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Price.ToString() <i class="fas fa-lira-sign"></i></td>
+                            <td>@item.Quantity</td>
+                            <td>@((item.Quantity * item.Price).ToString()) <i class="fas fa-lira-sign"></i></td>
+                            <td>
+                                <form asp-controller="Sepet" asp-action="DeleteFromCart" method="post">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times fa-fw"> </i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
         else
         {
-                <div class="alert alert-warning">
-                    No Product in Cart!
-                </div>
+            <div class="alert alert-warning">
+                @_localizer[" No Product in Cart!"]
+            </div>
         }
     </div>
     <div class="col-md-4">
@@ -58,34 +60,35 @@
         {
 
 
-        <div class="text-left">
-            <h4>Cart Summary</h4>
-        </div>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Chart Total</th>
-                    <td> @Model.TotalPrice().ToString("c") </td>
-                </tr>
-                <tr>
-                    <th> Shipping</th>
-                    <td> Free</td>
-                </tr>
-                <tr>
-                    <th> Order Total</th>
-                    <td>@Model.TotalPrice().ToString("c") </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="text-center">
-            <a href="/" class="btn btn-primary">
-                <i class="fa fa-arrow-circle-left fa-fw"> </i> Continue Shopping
-            </a>
-            <a href="/checkout" class="btn btn-primary">
-                Checkout <i class="fa fa-arrow-circle-right fa-fw"> </i>
-            </a>
+            <div class="text-left">
+                <h4>@_localizer["Cart Summary"]</h4>
+            </div>
+            <table class="table bg-warning">
+                <tbody>
+                    <tr>
+                        <th>@_localizer["Chart Total"]</th>
+                        <td> @Model.TotalPrice().ToString() <i class="fas fa-lira-sign"></i></td>
+                    </tr>
+                    <tr>
+                        <th>@_localizer["Tax"] </th>
+                        <td> 0 <i class="fas fa-lira-sign"></i></td>
+                    </tr>
+                    <tr>
+                        <th>@_localizer["Shipping"]</th>
+                        <td>@_localizer["Free"] </td>
+                    </tr>
+                    <tr>
+                        <th> @_localizer["Order Total"]</th>
+                        <td>@Model.TotalPrice().ToString() <i class="fas fa-lira-sign"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a href="/" class="btn btn-primary">
+                    <i class="fa fa-arrow-circle-left fa-fw"> </i> @_localizer["Continue Shopping"]
+                </a>
 
-        </div>
+            </div>
         }
     </div>
 </div>

@@ -23,7 +23,7 @@ namespace MarketApp.webUI.Models
         [Compare("Password")] //password ile kontrol edip eslestirme yapicak
         public string RePassword { get; set; }
 
-        [Required(ErrorMessage ="Deneme")]
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
     }

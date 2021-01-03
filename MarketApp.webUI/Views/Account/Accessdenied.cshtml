@@ -1,7 +1,10 @@
-﻿@{ 
+﻿@{
     ViewData["Title"] = "Accessdenied";
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+
 <div class="alet alert-warning">
-    <h1>Bu bölüme giremezsiniz</h1>
+    <h1>@_localizer["You do not have permission for entering this page"]</h1>
 </div>

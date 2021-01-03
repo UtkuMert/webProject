@@ -2,58 +2,67 @@
 @{
     ViewData["Title"] = "Register";
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
 @*Client Tarafı Validation*@
 @section Scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
 
-<h1>Register</h1>
+<h1>@_localizer["Register"]</h1>
 
 <hr />
-<div class="row">
+<div class="w-50 container mt-4">
     <div class="col-md-8">
         <form asp-controller="Account" asp-action="Register" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group row">
-                <label asp-for="FullName" class="col-md-2 col-form-label"></label>
-                <div class="col-md-10">
-                    <input asp-for="FullName" value="@Model.FullName" class="form-control" />
+                <div class="col-md-12">
+                    <label asp-for="FullName" class=" col-form-label">@_localizer["FullName"]</label>
                     <span asp-validation-for="FullName" class="text-danger"></span>  @*Hata mesajı yazdırılır.*@
+                    <input asp-for="FullName" value="@Model.FullName" class="form-control" />
+
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="UserName" class="col-md-2" col-form-label></label>
-                <div class="col-md-10">
-                    <input asp-for="UserName" value="@Model.UserName" class="form-control" />
+                <div class="col-md-12">
+                    <label asp-for="UserName" class="" col-form-label>@_localizer["UserName"]</label>
                     <span asp-validation-for="UserName" class="text-danger"></span>
+                    <input asp-for="UserName" value="@Model.UserName" class="form-control" />
+
                 </div>
+
             </div>
             <div class="form-group row">
-                <label asp-for="Email" class="col-md-2" col-form-label></label>
-                <div class="col-md-10">
-                    <input asp-for="Email" value="@Model.Email" class="form-control" />
+
+                <div class="col-md-12">
+                    <label asp-for="Email" class="" col-form-label>@_localizer["Email"]</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="Email" value="@Model.Email" class="form-control" />
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Password" class="col-md-2" col-form-label></label>
-                <div class="col-md-10">
-                    <input asp-for="Password" value="@Model.Password" class="form-control" />
+
+                <div class="col-md-12">
+                    <label asp-for="Password" class="" col-form-label>@_localizer["Password"]</label>
                     <span asp-validation-for="Password" class="text-danger"></span>
+                    <input asp-for="Password" value="@Model.Password" class="form-control" />
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="RePassword" class="col-md-2" col-form-label></label>
-                <div class="col-md-10">
-                    <input asp-for="RePassword" value="@Model.RePassword" class="form-control" />
+
+                <div class="col-md-12">
+                    <label asp-for="RePassword" class="" col-form-label>@_localizer["RePassword"]</label>
                     <span asp-validation-for="RePassword" class="text-danger"></span>
+
+                    <input asp-for="RePassword" value="@Model.RePassword" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-10 offset-md-2">
-                    <button type="submit" class="btn btn-danger">Create User</button>
+                    <button type="submit" class="btn btn-danger">@_localizer["Create Account"] </button>
                 </div>
             </div>
 

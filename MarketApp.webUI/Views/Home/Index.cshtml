@@ -5,11 +5,14 @@
     <div class="col-md-12">
         <partial name="_jumbotron" />
         <div class="row">
-            @foreach (var product in Model.Products)
-            {
-                
-                <partial name="_product" for="@product" />
-            }
+          
+                @foreach (var product in Model.Products)
+                {
+
+                    <partial name="_product" for="@product" />
+                }
+            
+
         </div>
     </div>
 </div>

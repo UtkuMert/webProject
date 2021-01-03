@@ -3,18 +3,19 @@
     ViewData["Title"] = "ProductList";
 
 }
-
-<h1>Admin Products</h1>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+<h1>@_localizer["Admin Products"]</h1>
 <hr />
 @if (Model.Products.Count() > 0)
 {
     <table class="table table-bordered">
         <thead>
             <tr>
-                <td>Id</td>             @*tasarım daha sonra*@
-                <td>Image</td>
-                <td>Name</td>
-                <td>Price</td>
+                <td>Id</td>           
+            <td>@_localizer["Image"]</td>
+            <td>@_localizer["Name"]</td>
+            <td>@_localizer["Price"]</td>
                 <td></td>
             </tr>
         </thead>
@@ -26,12 +27,12 @@
                     <td>@item.Id</td>
                     <td><img src="~/images/@item.ImgUrl" width="80" /></td>
                     <td>@item.Name</td>
-                    <td>@item.Price</td>
+                    <td>@item.Price <i class="fas fa-lira-sign"></i></td>
                     <td>
-                        <a class="btn btn-primary btn-sm mr-2" href="/admin/products/@item.Id">Edit</a>
+                        <a class="btn btn-primary btn-sm mr-2" href="/admin/products/@item.Id">@_localizer["Edit"]</a>
                         <form action="/admin/deleteproduct" method="post" style="display:inline">
                             <input type="hidden" name="productId" value="@item.Id" />
-                            <button class="btn btn-danger btn-sm mr-2" type="submit">Delete</button>
+                            <button class="btn btn-danger btn-sm mr-2" type="submit">@_localizer["Delete"]</button>
                         </form>
 
                     </td>
@@ -43,6 +44,6 @@
 else
 {
     <div class="alert alert-warning">
-        <h4>No Products</h4>
+        <h4>@_localizer["No Products"]</h4>
     </div>
 }

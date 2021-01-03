@@ -1,8 +1,10 @@
-﻿<header mb-3>
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4">Market App</h1>
-                <p class="lead">Pazarcılıgın Yeni Sistemi.</p>
-            </div>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
+<header mb-3>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Market App</h1>
+            <p class="lead" style="color:red">@_localizer["The New System of Marketing"]</p>
         </div>
+    </div>
 </header>
