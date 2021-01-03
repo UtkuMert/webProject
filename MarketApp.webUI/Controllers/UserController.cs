@@ -35,7 +35,7 @@ namespace MarketApp.webUI.Controllers
         }
         public IActionResult List(string category, int page=1)     // Tüm kayıtlar listelenir.
         {                                                          //sayfa numarası varsayılan olarak 1 verildi.
-            const int pageSize = 5; // bir sayfada bulunacak ürün adedi.
+            const int pageSize = 6; // bir sayfada bulunacak ürün adedi.
             return View(new ProductListModel()
             {
                 PageInfo = new PageInfo()

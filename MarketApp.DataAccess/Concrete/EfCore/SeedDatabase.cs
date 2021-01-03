@@ -27,24 +27,25 @@ namespace MarketApp.DataAccess.Concrete.EfCore
             }
         }
         private static Category[] Categories = {
+            new Category(){Name="Yiyecek"},
+            new Category(){Name="Giyim"},
             new Category(){Name="Meyve"},
             new Category(){Name="Sebze"}
         };
         private static Product[] Products = {
-            new Product(){Name="Elma", Price=10,ImgUrl="elma.jpg", Description="Açıklama"},
-            new Product(){Name="Armut", Price=20,ImgUrl="armut.jpg", Description="Açıklama"},
-            new Product(){Name="Ayva", Price=30,ImgUrl="ayva.jpg", Description="Açıklama"},
-            new Product(){Name="Soğan", Price=40,ImgUrl="sogan.jpg", Description="Açıklama"},
-            new Product(){Name="Limon", Price=50,ImgUrl="limon.jpg", Description="Açıklama"}
+            new Product(){Name="Elma", Price=5,ImgUrl="elma.jpg", Description="<p>Taze ve dogal kırmızı elma</p>"},
+            new Product(){Name="Domates", Price=4,ImgUrl="domates.jpg", Description="<p>Taze ve dogal</p>"},
+            new Product(){Name="Tisört", Price=40,ImgUrl="siyahtisört.jpg", Description="Açıklama"},
+            new Product(){Name="Balık", Price=50,ImgUrl="balık.jpg", Description="Açıklama"}
         };
         private static ProductCategory[] ProductCategory =
         {
             new ProductCategory() {Product = Products[0], Category=Categories[0]},
+            new ProductCategory() {Product = Products[0], Category=Categories[2]},
             new ProductCategory() {Product = Products[1], Category=Categories[0]},
-            new ProductCategory() {Product = Products[2], Category=Categories[0]},
-            new ProductCategory() {Product = Products[3], Category=Categories[1]},
-            new ProductCategory() {Product = Products[4], Category=Categories[0]},
-            
+            new ProductCategory() {Product = Products[1], Category=Categories[3]},
+            new ProductCategory() {Product = Products[2], Category=Categories[1]},
+            new ProductCategory() {Product = Products[3], Category=Categories[0]}
         };
     }
 }

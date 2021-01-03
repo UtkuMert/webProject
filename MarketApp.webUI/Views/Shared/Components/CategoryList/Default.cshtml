@@ -6,7 +6,7 @@
             {
             <li class="nav-item">
                 <a asp-controller="User" asp-action="List" asp-route-category="@item.Name.ToLower()"
-                   class="nav-link text-center @(Model.SelectedCategory== item.Name.ToLower()?"active":"")">
+                   class="nav-link text-center list-group-item-action @(Model.SelectedCategory== item.Name.ToLower()?"active":"")">
                     @item.Name
                 </a>
             </li>
