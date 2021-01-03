@@ -32,7 +32,7 @@ namespace MarketApp.webUI
             services.AddDbContext<UserIdentityDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddIdentity<UserIdentity, IdentityRole>()
+              services.AddIdentity<UserIdentity, IdentityRole>()
                 .AddEntityFrameworkStores<UserIdentityDbContext>()
                 .AddDefaultTokenProviders(); //Sifre reset veya mail değismede benzersiz bir token üretir
             services.Configure<IdentityOptions>(options =>
@@ -73,10 +73,11 @@ namespace MarketApp.webUI
             
             services.AddScoped<IProductRepository, EfCoreProductRepository>(); // IProductRepository cagrıldıgında EfCoreProductRepository gönderilir.
             services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>(); // ICategoryRepository cagrıldıgında EfCoreCategoryRepository gönderilir.
+            services.AddScoped<ISepetRepository, EfCoreSepetRepository>();
 
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
-            
+            services.AddScoped<ISepetService, SepetManager>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager)
@@ -106,6 +107,11 @@ namespace MarketApp.webUI
                   name: "adminProducts",
                   pattern: "admin/{products}",
                   defaults: new { controller = "Admin", action = "ProductList" });
+
+                endpoints.MapControllerRoute(
+                  name: "sepet",
+                  pattern: "sepet",
+                  defaults: new { controller = "Sepet", action = "Index" });
 
                 endpoints.MapControllerRoute(
                     name: "products",      // Url'ye products yazilmasi durumunda kategori bilgisi gerekmeksizin urunler listelenir. 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketApp.DataAccess.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20210102011923_UpdateProductPriceNullable")]
-    partial class UpdateProductPriceNullable
+    [Migration("20210103013523_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

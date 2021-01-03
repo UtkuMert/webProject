@@ -1,4 +1,5 @@
-﻿using MarketApp.webUI.Identity;
+﻿using MarketApp.Business.Abstract;
+using MarketApp.webUI.Identity;
 using MarketApp.webUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,10 @@ namespace MarketApp.webUI.Controllers
     {
         private UserManager<UserIdentity> _userManager;
         private SignInManager<UserIdentity> _signInManager;
-
-        public AccountController(UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager)
+        private ISepetService _sepetService;
+        public AccountController(ISepetService sepetService,UserManager<UserIdentity> userManager, SignInManager<UserIdentity> signInManager)
         {
+            _sepetService = sepetService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -25,7 +27,6 @@ namespace MarketApp.webUI.Controllers
             return View(new RegisterModel());
         }
         [HttpPost]
-        
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if(!ModelState.IsValid)
@@ -43,7 +44,7 @@ namespace MarketApp.webUI.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if(result.Succeeded)
             {
-
+                
                 return RedirectToAction("Login", "Account"); 
             }
 
@@ -73,6 +74,7 @@ namespace MarketApp.webUI.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false,false); //cookinin tarayıcı kapandıgında kalıcılıgı ile ilgili
             if(result.Succeeded)
             {
+                _sepetService.InitializeSepet(user.Id);  // Sepet kaydı db'ye eklenecek.
                 return Redirect(returnUrl); //gitmek istedigi yere gider yetkisi yoksa anasayfaya doner
             }
             return View(model);

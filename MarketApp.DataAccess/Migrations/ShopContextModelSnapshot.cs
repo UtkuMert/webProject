@@ -73,6 +73,46 @@ namespace MarketApp.DataAccess.Migrations
                     b.ToTable("ProductCategory");
                 });
 
+            modelBuilder.Entity("MarketApp.Entity.Sepet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sepets");
+                });
+
+            modelBuilder.Entity("MarketApp.Entity.SepetItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SepetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SepetId");
+
+                    b.ToTable("SepetItem");
+                });
+
             modelBuilder.Entity("MarketApp.Entity.ProductCategory", b =>
                 {
                     b.HasOne("MarketApp.Entity.Category", "Category")
@@ -92,6 +132,25 @@ namespace MarketApp.DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("MarketApp.Entity.SepetItem", b =>
+                {
+                    b.HasOne("MarketApp.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MarketApp.Entity.Sepet", "Sepet")
+                        .WithMany("SepetItems")
+                        .HasForeignKey("SepetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Sepet");
+                });
+
             modelBuilder.Entity("MarketApp.Entity.Category", b =>
                 {
                     b.Navigation("ProductCategories");
@@ -100,6 +159,11 @@ namespace MarketApp.DataAccess.Migrations
             modelBuilder.Entity("MarketApp.Entity.Product", b =>
                 {
                     b.Navigation("ProductCategories");
+                });
+
+            modelBuilder.Entity("MarketApp.Entity.Sepet", b =>
+                {
+                    b.Navigation("SepetItems");
                 });
 #pragma warning restore 612, 618
         }

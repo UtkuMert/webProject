@@ -10,7 +10,8 @@ namespace MarketApp.DataAccess.Concrete.EfCore
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MarketDb;integrated security=true;");
+       //     optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MarketDb;integrated security=true;"); // Local Db'ye bağlanmak için.
+            optionsBuilder.UseSqlServer(@"Server =.;Database=MarketStore; trusted_connection=true;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,6 @@ namespace MarketApp.DataAccess.Concrete.EfCore
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<Sepet> Sepets { get; set; }
     }
 }
